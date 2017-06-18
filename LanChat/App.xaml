@@ -1,0 +1,146 @@
+﻿<Application x:Class="LanChat.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+             xmlns:local="clr-namespace:LanChat"
+             xmlns:converters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+         <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.CheckBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ListBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.RadioButton.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/materialdesigntheme.togglebutton.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/materialdesigntheme.combobox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBlock.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/materialdesigntheme.toolbar.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/materialdesigntheme.toolbartray.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/materialdesigntheme.progressbar.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/materialdesigntheme.label.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/materialdesigncolor.teal.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+             <Style x:Key="ListBoxItemChatMe" TargetType="{x:Type ListBoxItem}">
+                <Setter Property="Background" Value="#CDDC39"/>
+                <Setter Property="BorderBrush" Value="#AFB42B"/>
+                <Setter Property="Foreground" Value="#212121"/>
+                 <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ItemsControl}}}"/>
+                 <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ItemsControl}}}"/>
+                 <Setter Property="Padding" Value="8"/>
+                 <Setter Property="MinWidth" Value="100"/>
+                 <Setter Property="Width" Value="Auto"/>
+                 <Setter Property="Height" Value="Auto"/>
+                 <Setter Property="HorizontalAlignment" Value="Left"/>
+                 <Setter Property="SnapsToDevicePixels" Value="True"/>
+                 <Setter Property="Tag" Value="{Binding Type, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>
+                 <Setter Property="Template">
+                     <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                            <Grid x:Name="grid">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid x:Name="Left">
+                                     <Grid.RowDefinitions>
+                                         <RowDefinition Height="Auto"/>
+                                         <RowDefinition Height="*"/>
+                                     </Grid.RowDefinitions>
+                                     <Grid Grid.Row="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Opacity="0.5"
+                                               Content="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" 
+                                               Foreground="{TemplateBinding Foreground}" Background="{TemplateBinding Background}" 
+                                               FontFamily="Tahoma" FontSize="15"/>
+                                         
+                                    </Grid>
+                                 </Grid>
+                                 <Border x:Name="Center" BorderThickness="{TemplateBinding BorderThickness}" ClipToBounds="{TemplateBinding ClipToBounds}" 
+                                         CornerRadius="10" Grid.Column="2">
+                                     <Grid>
+                                         <Grid.RowDefinitions>
+                                             <RowDefinition Height="Auto"/>
+                                             <RowDefinition Height="*"/>
+                                         </Grid.RowDefinitions>
+
+                                         <Border x:Name="border" Margin="5,0" 
+                                                 BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" 
+                                                 CornerRadius="4" Background="{TemplateBinding Background}" 
+                                                 Padding="0" Grid.Row="1">
+                                             <Grid Margin="2">
+                                                 <Grid.RowDefinitions>
+                                                     <RowDefinition Height="*"/>
+                                                     <RowDefinition Height="Auto"/>
+                                                 </Grid.RowDefinitions>
+                                                <Grid>
+                                                    <TextBlock Text="{Binding Content, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" FontFamily="Tahoma" Background="{x:Null}" 
+                                                                Foreground="{TemplateBinding Foreground}" TextWrapping="WrapWithOverflow"
+                                                                ScrollViewer.CanContentScroll="True" UseLayoutRounding="True" Padding="4" Margin="0,3,0,1"/>
+                                                 </Grid>
+                                                 <Border Grid.Row="1" BorderThickness="0,0.5,0,0" BorderBrush="{TemplateBinding BorderBrush}">
+                                                     <Grid Margin="1">
+                                                         <Grid.ColumnDefinitions>
+                                                             <ColumnDefinition Width="Auto"/>
+                                                             <ColumnDefinition Width="*"/>
+                                                             <ColumnDefinition Width="Auto"/>
+                                                         </Grid.ColumnDefinitions>
+                                                         <Label x:Name="DateTime"  Opacity="0.5"
+                                                                Content="{Binding Time, UpdateSourceTrigger=PropertyChanged}" 
+                                                                Foreground="{TemplateBinding Foreground}" Background="{TemplateBinding Background}" 
+                                                                FontFamily="Tahoma" FontSize="9"/>
+                                                     </Grid>
+                                                 </Border>
+                                             </Grid>
+                                         </Border>
+
+                                     </Grid>
+                                 </Border>
+                                 <Grid x:Name="Right" Margin="0" Grid.Column="4">
+                                     <Grid.RowDefinitions>
+                                         <RowDefinition Height="Auto"/>
+                                         <RowDefinition Height="*"/>
+                                     </Grid.RowDefinitions>
+                                     <Grid Grid.Row="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Opacity="0.5"
+                                               Content="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" 
+                                               Foreground="{TemplateBinding Foreground}" Background="{TemplateBinding Background}" 
+                                               FontFamily="Tahoma" FontSize="15"/>
+                                    </Grid>
+                                 </Grid>
+                             </Grid>
+                            <ControlTemplate.Triggers>
+                                <DataTrigger Binding="{Binding Tag, RelativeSource={RelativeSource Self}}" Value="{x:Static local:MessageType.Other}">
+                                     <Setter Property="Margin" Value="0,3,30,3"/>
+                                     <Setter Property="HorizontalAlignment" Value="Left"/>
+                                     <Setter Property="Visibility" TargetName="Right" Value="Collapsed"/>
+                                     <Setter Property="Visibility" TargetName="Left" Value="Visible"/>
+                                 </DataTrigger>
+                                <DataTrigger Binding="{Binding Tag, RelativeSource={RelativeSource Self}}" Value="{x:Static local:MessageType.Me}">
+                                    <Setter Property="Margin" Value="30,3,0,3"/>
+                                    <Setter Property="HorizontalAlignment" Value="Right"/>
+                                    <Setter Property="Background" Value="#03A9F4"/>
+                                    <Setter Property="BorderBrush" Value="#0288D1"/>
+                                    <Setter Property="Visibility" TargetName="Right" Value="Visible"/>
+                                    <Setter Property="Visibility" TargetName="Left" Value="Collapsed"/>
+                                </DataTrigger>
+                            </ControlTemplate.Triggers>
+                         </ControlTemplate>
+                     </Setter.Value>
+                 </Setter>
+             </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
